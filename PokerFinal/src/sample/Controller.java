@@ -172,6 +172,8 @@ public class Controller {
         whatiscolor4lbl.setText("Quantity of "+color4+"'s");
         whatiscolor5lbl.setText("Quantity of "+color5+"'s");
 
+        //clearing textboxes to use again in the future code
+        
         color1amt.clear();
         color2amt.clear();
         color3amt.clear();
@@ -273,6 +275,8 @@ public class Controller {
         chips.add(chip3);
         chips.add(chip4);
         chips.add(chip5);
+        
+        //sorting through the arraylist to get the largest and smallest chip values to make calculations easier
         chips.sort(new Comparator<pokerChip>() {
             @Override
             public int compare(pokerChip o1, pokerChip o2) {
@@ -284,10 +288,13 @@ public class Controller {
 
 
 
-        float moneyleft = buyIn;
-        Float targetAmt = moneyleft/5;
+        float moneyleft = buyIn;  //moneyleft is the set buy in amount and will be used to subtract from throughout the algorithms loops to subtract from as a target value
+        Float targetAmt = moneyleft/5; //The target amount of each chip color will be equal to 1/5 of the total buy in at the start
 
-
+        
+        
+        //here I am looping through for the first time to start calculations
+        
         for(int i = 4;i>=0;i--) {
             if (targetAmt / chips.get(i).value <= chips.get(i).amount / playerNum)//replace maxc1 with chips.get(4).amount/playernum
             {
@@ -300,7 +307,8 @@ public class Controller {
                 targetAmt = moneyleft / i;
             }
         }
-
+        
+        //after the initial looping and setting the values I run through the list again to add any remaining chips that the first loop could not.
         for(int i = 4;i>=0;i--)
         {
             if(chips.get(i).handoutAmount!=chips.get(i).amount / playerNum && chips.get(i).value == moneyleft)
@@ -330,11 +338,12 @@ public class Controller {
                 }
             }
         }
-
+        //The above loop is the final run through to get the total amount each player has in thier chip stack adds up to at least 1/20th plus or minus of the buy in amount.
         recLabel.setText("Each Player will start with $"+total+"0 and be handed the following chips to start");
         recLabel.setVisible(true);
 
 
+        //output statements set to te text boxes on the output screen
         chip1Label.setText(chips.get(4).handoutAmount+" "+chips.get(4).color+" chips each worth $"+chips.get(4).getValue());
         chip2Label.setText(chips.get(3).handoutAmount+" "+chips.get(3).color+" chips each worth $"+chips.get(3).getValue());
         chip3Label.setText(chips.get(2).handoutAmount+" "+chips.get(2).color+" chips each worth $"+chips.get(2).getValue());
@@ -359,7 +368,9 @@ public class Controller {
 
     }
 
-
+    
+    
+    //this is just a simple class for the poker chips themselves. Making the class made it easier to sort through chips and set values without overusing global variables.
     public class pokerChip
     {
 
